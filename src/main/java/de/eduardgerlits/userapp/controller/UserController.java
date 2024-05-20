@@ -17,7 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<?>> getUserWithComments(@PathVariable final int id) {
-        return userService.buildFullUser(id).map(ResponseEntity::ok);
+    public Mono<ResponseEntity<?>> getUserWithPosts(@PathVariable final int id) {
+        return userService.fetchUserData(id).map(ResponseEntity::ok);
     }
 }

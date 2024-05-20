@@ -23,4 +23,20 @@ public class User {
 
     private String website;
 
+    private Company company;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        return this.id == ((User) o).id
+                && this.name.equals(((User) o).name)
+                && this.username.equals(((User) o).username)
+                && this.email.equals(((User) o).email)
+                && this.address.equals(((User) o).address)
+                && this.phone.equals(((User) o).phone)
+                && this.website.equals(((User) o).website)
+                && this.company.equals(((User) o).company);
+    }
+
 }

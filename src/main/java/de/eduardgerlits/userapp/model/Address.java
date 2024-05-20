@@ -19,4 +19,14 @@ public class Address {
 
     private Geo geo;
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Address)) return false;
+        return street.equals(((Address) o).street)
+                && suite.equals(((Address) o).suite)
+                && city.equals(((Address) o).city)
+                && zipcode.equals(((Address) o).zipcode)
+                && geo.equals(((Address) o).geo);
+    }
+
 }

@@ -13,4 +13,10 @@ public class Geo {
 
     private String lng;
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Geo)) return false;
+        return lat.equals(((Geo) o).lat) && lng.equals(((Geo) o).lng);
+    }
+
 }

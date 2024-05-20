@@ -1,8 +1,8 @@
 package de.eduardgerlits.userapp.service;
 
-import de.eduardgerlits.userapp.model.UserWithComments;
 import de.eduardgerlits.userapp.model.User;
-import de.eduardgerlits.userapp.model.UserComment;
+import de.eduardgerlits.userapp.model.UserWithPosts;
+import de.eduardgerlits.userapp.model.UserPost;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -15,16 +15,12 @@ public class UserService {
 
     private final UserClientService userClientService;
 
-    public Mono<UserWithComments> buildFullUser(final int id) {
+    public Mono<UserWithPosts> fetchUserData(final int id) {
         Mono<User> userMono = userClientService.fetchUser(id);
-        Mono<List<UserComment>> userCommentListMono = userClientService.fetchUserComments(id);
+        Mono<List<UserPost>> userCommentListMono = userClientService.fetchUserPosts(id);
 
         return userMono.zipWith(userCommentListMono)
-                .map(tuple -> buildMergedUser(tuple.getT1(), tuple.getT2()));
-    }
-
-    private UserWithComments buildMergedUser(User user, List<UserComment> userComments) {
-        return new UserWithComments(user, userComments);
+                .map(tuple -> new UserWithPosts(tuple.getT1(), tuple.getT2()));
     }
 
 }
