@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+
+  user-app-service:
+    image: "eg/user-app-service:0.0.1"
+    hostname: "user-app-service"
+    ports:
+      - '8082:8080'
+    build: .

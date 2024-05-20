@@ -26,7 +26,6 @@ import java.util.List;
 public class UserControllerIntegrationTest {
 
     private static final int MOCK_WEB_SERVER_PORT = 8081;
-    private static final String MOCK_WEB_SERVER_URI = "http://localhost:" + MOCK_WEB_SERVER_PORT;
 
     private static MockWebServer mockWebServer;
 
@@ -66,12 +65,12 @@ public class UserControllerIntegrationTest {
                                 .setResponseCode(200)
                                 .setBody(userResponseId2AsStr);
 
-                    case "/users/-1", "/posts?userId=-1":
+                    case "/users/-1":
                         return new MockResponse()
                                 .setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                                 .setResponseCode(404);
 
-                    case "/users/100", "/posts?userId=100":
+                    case "/users/100":
                         return new MockResponse()
                                 .setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                                 .setResponseCode(500);
@@ -146,7 +145,7 @@ public class UserControllerIntegrationTest {
                 .expectBody()
                 .jsonPath("$.timestamp").exists()
                 .jsonPath("$.status").isEqualTo("NOT_FOUND")
-                .jsonPath("$.message").exists()
+                .jsonPath("$.message").isEqualTo("User with id -1 not found")
                 .jsonPath("$.errors").exists();
     }
 
@@ -164,7 +163,7 @@ public class UserControllerIntegrationTest {
                 .expectBody()
                 .jsonPath("$.timestamp").exists()
                 .jsonPath("$.status").isEqualTo("INTERNAL_SERVER_ERROR")
-                .jsonPath("$.message").exists()
+                .jsonPath("$.message").isEqualTo("User API to path http://localhost:8081/users/100 seems to be unreachable")
                 .jsonPath("$.errors").exists();
     }
 
