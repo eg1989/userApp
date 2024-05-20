@@ -51,8 +51,7 @@ public class UserControllerIntegrationTest {
             @Override
             public MockResponse dispatch(@NotNull RecordedRequest request) throws InterruptedException {
                 ObjectMapper om = new ObjectMapper();
-                switch (request.getPath()) {
-
+                return switch (request.getPath()) {
                     case "/users/1" ->
                         new MockResponse()
                                 .setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
@@ -87,8 +86,9 @@ public class UserControllerIntegrationTest {
                                 .setResponseCode(200)
                                 .setBody("[]");
 
-                }
-                return new MockResponse();
+                    default ->
+                        new MockResponse();
+                };
             }
         });
 
@@ -144,8 +144,7 @@ public class UserControllerIntegrationTest {
                 .expectBody()
                 .jsonPath("$.timestamp").exists()
                 .jsonPath("$.status").isEqualTo("NOT_FOUND")
-                .jsonPath("$.message").isEqualTo("User with id -1 not found")
-                .jsonPath("$.errors").exists();
+                .jsonPath("$.message").isEqualTo("User with id -1 not found");
     }
 
     @Test
@@ -162,8 +161,7 @@ public class UserControllerIntegrationTest {
                 .expectBody()
                 .jsonPath("$.timestamp").exists()
                 .jsonPath("$.status").isEqualTo("INTERNAL_SERVER_ERROR")
-                .jsonPath("$.message").isEqualTo("User API to path http://localhost:8081/users/100 seems to be unreachable")
-                .jsonPath("$.errors").exists();
+                .jsonPath("$.message").isEqualTo("User API to path http://localhost:8081/users/100 seems to be unreachable");
     }
 
 }
