@@ -96,12 +96,14 @@ public class UserClientServiceTest {
     @Test
     public void fetchUserPosts_ShouldThrowUserNotFoundException_IfHttpResponseIsNotFound() {
 
+        // Arrange
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(HttpStatus.NOT_FOUND.value())
                         .setHeader("Content-Type", "application/json")
         );
 
+        // Act & Assert
         Assertions
                 .assertThatExceptionOfType(UserPostsNotFoundException.class)
                 .isThrownBy(() -> serviceUnderTest.fetchUserPosts(-1).block())
@@ -111,12 +113,14 @@ public class UserClientServiceTest {
     @Test
     public void fetchUserPosts_ShouldThrowApiUnreachableException_IfHttpResponseIs5XX() {
 
+        // Arrange
         mockWebServer.enqueue(
                 new MockResponse()
                         .setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
                         .setHeader("Content-Type", "application/json")
         );
 
+        // Act & Assert
         Assertions
                 .assertThatExceptionOfType(ApiUnreachableException.class)
                 .isThrownBy(() -> serviceUnderTest.fetchUserPosts(-1).block())

@@ -53,43 +53,42 @@ public class UserControllerIntegrationTest {
                 ObjectMapper om = new ObjectMapper();
                 switch (request.getPath()) {
 
-                    case "/users/1":
-                        return new MockResponse()
+                    case "/users/1" ->
+                        new MockResponse()
                                 .setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                                 .setResponseCode(200)
                                 .setBody(userResponseId1AsStr);
 
-                    case "/users/2":
-                        return new MockResponse()
+                    case "/users/2" ->
+                        new MockResponse()
                                 .setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                                 .setResponseCode(200)
                                 .setBody(userResponseId2AsStr);
 
-                    case "/users/-1":
-                        return new MockResponse()
+                    case "/users/-1" ->
+                        new MockResponse()
                                 .setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                                 .setResponseCode(404);
 
-                    case "/users/100":
-                        return new MockResponse()
+                    case "/users/100" ->
+                        new MockResponse()
                                 .setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                                 .setResponseCode(500);
 
-                    case "/posts?userId=1":
-                        return new MockResponse()
+                    case "/posts?userId=1" ->
+                        new MockResponse()
                                 .setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                                 .setResponseCode(200)
                                 .setBody(postListResponseId1AsStr);
 
-                    case "/posts?userId=2":
-                        return new MockResponse()
+                    case "/posts?userId=2" ->
+                        new MockResponse()
                                 .setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                                 .setResponseCode(200)
                                 .setBody("[]");
 
-                    default:
-                        return new MockResponse();
                 }
+                return new MockResponse();
             }
         });
 
